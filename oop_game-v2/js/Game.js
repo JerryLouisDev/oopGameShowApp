@@ -74,19 +74,21 @@ class Game{
     // This method is checking for letters being selected to win the game
     checkForWin(){
         let won = true;
-        const letterClass = document.querySelector('.letter');
+        const letterClass = document.querySelectorAll('.letter');
         const checkPhrase = Array.from(letterClass);
         checkPhrase.forEach(letter => {
             if(letter.classList.contains('hide')){
                 won = false;
             }
         })
+        return won;
     }
     // game over method is checking the overylay id and checking if the user wins or lose and giving a message 
     gameOver(){
         const overlayID = document.getElementById('overlay');
         overlayID.style.display = 'inherit';
         const gameOverMessageID = document.getElementById('game-over-message');
+        console.log(this.checkForWin());
         if(this.checkForWin()){
             gameOverMessageID.innerHTML = 'You Won!';
             overlayID.classList.remove('start');
@@ -96,8 +98,15 @@ class Game{
             overlayID.classList.remove('start');
             overlayID.classList.add('lose');
         }
+        // document.getElementById('btn__reset').addEventListener('click', (e)=> {
+        //    e.target.location.reload();
+        // })
         setTimeout(() => {
             location.reload();
-        }, 1000);
+            }, 2000);
     }
 }
+
+//setTimeout(() => {
+//     location.reload();
+// }, 3000)
