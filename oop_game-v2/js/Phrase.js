@@ -40,4 +40,12 @@ class Phrase{
             
         })
     }
+
+    clearPhrase(){
+            const phraseChild = document.querySelector('#phrase').firstElementChild;
+            phraseChild.textContent = '';
+            // phraseChild.textContent = getRandomPhrase();
+            console.log(phraseChild);
+        }
+    }
 }
