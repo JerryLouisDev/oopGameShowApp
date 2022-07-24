@@ -13,10 +13,11 @@ class Game{
     createNewPhrases(){
         // list is holding array of quoted phrases
         const list = [
-            'Hey There You',
-            'Killing me Smalls',
-            'What ya do',
-            'coding is awesome'
+            'The force is strong',
+            'Be great today',
+            'You are a great engineer',
+            'Coding is awesome',
+            'Code with your heart'
         ]
         // holding the class phrase and storing quote as parameter
         const phrases = list.map(quote => new Phrase(quote));
@@ -26,8 +27,6 @@ class Game{
         const dis = document.querySelector('#overlay').style.display = 'none'
         this.activePhrase = this.getRandomPhrase();
         this.activePhrase.addPhraseToDisplay();
-        // dis.classList.remove('win');
-        // dis.classList.remove('lose');
     }
     getRandomPhrase(){
         // randomSelection selects a random phrases 
@@ -61,11 +60,11 @@ class Game{
 
     // remove life method is tracking attempts made my the user
     removeLife(){
-        const triesClass = document.querySelectorAll('.tries');
+        // added img to the query
+        const triesClass = document.querySelectorAll('.tries img');
         console.log(triesClass)
-        const tries = Array.from(triesClass);
-        console.log(tries)
-        const oneTry = tries[this.missed].firstElementChild;
+        //removed firstElementChild from line 71 because there was no need of targeting the firstElementChild 
+        const oneTry = triesClass[this.missed];
         oneTry.src = 'images/lostHeart.png';
         this.missed +=1;
         console.log()
@@ -75,36 +74,25 @@ class Game{
     }
 
 
-resetLivesAndKeys(){
-    this.activePhrase.addPhraseToDisplay();
-    // const keyboard = document.querySelector('.keyrow');
-    // const keyboardChildren = keyboard.children;
+    resetLivesAndKeys(){
+        this.activePhrase.addPhraseToDisplay();
 
-    // for (const keyButton of keyboardChildren) {
-    //     console.log(keyButton);
-    //     const buttons = keyButton.children;
-
-    //     for(const button of buttons) {
-    //         console.log(button);
-    //         button.disabled = false;
-    //         button.className = 'key';
-            
-    //     }
-    // }
-    const buttons = document.querySelectorAll('#qwerty button');
-for (const button of buttons) {
-  button.disabled = false;
-  button.className = 'key';
-} 
-    const scoreboard = document.querySelector('#scoreboard');
-    const lives = scoreboard.firstElementChild.children;
-    for (const heart of lives) {
-        const img = heart.firstElementChild;
-        if (img.getAttribute('src') === 'images/lostHeart.png'){
-            img.setAttribute('src', 'images/liveHeart.png');
+        const buttons = document.querySelectorAll('#qwerty button');
+        for (const button of buttons) {
+            button.disabled = false;
+            button.className = 'key';
+        } 
+        const scoreboard = document.querySelector('#scoreboard');
+        const lives = scoreboard.firstElementChild.children;
+        for (const heart of lives) {
+            const img = heart.firstElementChild;
+            if (img.getAttribute('src') === 'images/lostHeart.png'){
+                img.setAttribute('src', 'images/liveHeart.png');
+            }
         }
+        //this.missed needed to added to reset lives
+        this.missed = 0;
     }
-}
 
 
     // This method is checking for letters being selected to win the game
@@ -125,13 +113,13 @@ for (const button of buttons) {
         overlayID.style.display = 'inherit';
         const gameOverMessageID = document.getElementById('game-over-message');
         console.log(this.checkForWin());
+        //**added on*/ overlayId needed to be added to prevent the overlay from only being one color after a win or lose
+        overlayID.classList = '';
         if(this.checkForWin()){
             gameOverMessageID.innerHTML = 'You Won!';
-            overlayID.classList.remove('start');
             overlayID.classList.add('win');
         }else{
             gameOverMessageID.innerHTML = 'You Lose!';
-            overlayID.classList.remove('start');
             overlayID.classList.add('lose');
         }
         document.getElementById('btn__reset').addEventListener('click', ()=> {
@@ -145,5 +133,3 @@ for (const button of buttons) {
         this.resetLivesAndKeys();
     }
 }
-
-
